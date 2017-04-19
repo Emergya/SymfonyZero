@@ -85,9 +85,9 @@ fos_user:
     profile:
         form:
             type: user_profile
-    #from_email:
-    #    address: "%mailer_user%%"
-    #    sender_name: "%mailer_user%%"
+    from_email:
+        address: "%mailer_user%%"
+        sender_name: "%mailer_user%%"
 
 easy_admin:
     entities:
