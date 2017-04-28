@@ -1,0 +1,29 @@
+#Elasticsearch parameters
+fos_elastica:
+    clients:
+        default: { host: %elastic_host%, port: %elastic_port% }
+    indexes:
+        symfonyzero:
+            finder: ~
+            types:
+                user:
+                    indexable_callback: 'isIndexable'
+                    mappings:
+                        id: ~
+                        name:
+                            type: string
+                        username:
+                            type: string
+                        email:
+                            type: string
+                    persistence:
+                        driver: orm
+                        model:  AppBundle\Entity\User
+                        elastica_to_model_transformer:
+                            service: symfonyzero.elastica_to_model_transformer
+                        provider: ~                           
+                        listener:
+                            insert: false
+                            update: false
+                            delete: true
+                        finder: ~

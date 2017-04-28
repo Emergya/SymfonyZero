@@ -25,6 +25,7 @@ SymfonyZero uses the last LTS version: Symfony 2.8 (although you can change it e
   ```
 *  You need to have the PHP-XML module installed
 *  You need to have at least version 2.6.21 of libxml
+*  You need to install elasticsearch (1.7.2 version recommended)
 *  PHP tokenizer needs to be enabled
 *  mbstring functions need to be enabled
 *  iconv needs to be enabled
@@ -64,7 +65,7 @@ POSIX needs to be enabled (only on *nix)
  apt-get install php5-curl
  ```
  
- By default, the bundle is disable, so if you want to use it, you must add the bundle in _composer.json_ before the composer install command:
+ By default, the bundle is disabled, so if you want to use it, you must add the bundle in _composer.json_ before the composer install command:
  
   ```sh
  "mlpz/mailchimp-bundle": "dev-master",
@@ -75,7 +76,34 @@ POSIX needs to be enabled (only on *nix)
   ```sh
  new MZ\MailChimpBundle\MZMailChimpBundle(),
  ```
-
+ 
+ Also, to install the bundle to integrate with ElasticSearch, you need to follow several steps. First, we have to activate the bundle. Open _app/AppKernel.php_ file and uncomment the line:
+ 
+  ```sh
+ new FOS\ElasticaBundle\FOSElasticaBundle()
+ ```
+ Then, we have to activate the listener for indexing users. Open _app/config/services.yml_ file and uncomment the lines:
+ 
+  ```sh
+     symfonyzero.elastica_listener_users:
+        class: AppBundle\Listener\UsersListener
+        #Object_persister: entity indexed at elasticsearch.yml config file 
+        arguments:
+            - @fos_elastica.object_persister.symfonyzero.user
+            - @fos_elastica.indexable
+        calls:
+            - [ setContainer, ['@service_container'] ]
+        tags:
+            - { name: doctrine.event_listener, event: postPersist }
+            - { name: doctrine.event_listener, event: postUpdate }
+            - { name: kernel.event_listener, event: kernel.terminate, method: onKernelTerminate }
+ ```
+ Finally, we have to include the elasticsearch config file. Open _app/config/config.yml_ file and uncomment the line:
+ 
+  ```sh
+            - { resource: elasticsearch.yml }
+ ```
+ 
 # Setup
  
   Install SymfonyZero as base of your projects is very easy. You have two options, one using the automatic script for the installation (if you choose this option, please jump to the next section), or following the step by step tutorial. If you prefer to install it manually to know all the process, please read the following instructions.
@@ -276,6 +304,12 @@ easy_admin:
     entities:
         - AppBundle\Entity\User
         - AppBundle\Entity\YourNewEntity
+```
+
+If you have activated ElasticaBundle, you'll have to configure Elastic Search. Open the _app/config/parameters.yml_ file and include this parameters:
+```yml
+elastic_host: 
+elastic_port: 
 ```
 
 SymfonyZero provides an example of data fixtures with some users. You can use it to test the application with these users (with different roles) or to generate your own data fixture using these like a base of your owns.

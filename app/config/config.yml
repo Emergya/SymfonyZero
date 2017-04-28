@@ -2,6 +2,7 @@ imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
     - { resource: services.yml }
+ #   - { resource: elasticsearch.yml }
 
 # Put parameters here that don't need to change on each machine where the app is deployed
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
@@ -220,8 +221,8 @@ hwi_oauth:
     resource_owners:
         google:
             type: google
-            client_id: "%client_id_google%"
-            client_secret: "%client_secret_google%"
+            client_id: 391171632826-fe28t6v9ep5egijpaofbn075d5uhbom9.apps.googleusercontent.com
+            client_secret: MHr5h1cEUSngUBsavhiLqDqs
             scope: "profile email"
 
         facebook:
@@ -251,4 +252,9 @@ hwi_oauth:
             google: google_id
             facebook: facebook_id
             twitter: twitter_id
+
+# Mailchimp
+mz_mail_chimp:
+    api_key: dede47832e8b331129a850f54afbf3c2-us15
+    default_list: f6ebf04e91
 

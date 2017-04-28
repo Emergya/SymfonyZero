@@ -35,3 +35,20 @@ services:
     symfonyzero.parsermarkdown:
         class:      AppBundle\Services\ParserMarkdown
         arguments:  ["%parsermarkdown.urlreadme%"]
+        
+    symfonyzero.elastica_to_model_transformer:
+        class: AppBundle\Transformer\ElasticaResultTransformer
+    
+#    symfonyzero.elastica_listener_users: 
+#        class: AppBundle\Listener\UsersListener
+#        #Object_persister: entity indexed at elasticsearch.yml config file 
+#        arguments:
+#            - @fos_elastica.object_persister.symfonyzero.user
+#            - @fos_elastica.indexable
+#        calls:
+#            - [ setContainer, ['@service_container'] ]
+#        tags:
+#            - { name: doctrine.event_listener, event: postPersist }
+#            - { name: doctrine.event_listener, event: postUpdate }
+#            - { name: kernel.event_listener, event: kernel.terminate, method: onKernelTerminate }
+   

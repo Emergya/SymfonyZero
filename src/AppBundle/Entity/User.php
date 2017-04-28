@@ -120,4 +120,18 @@ class User extends BaseUser
    	$this->name = $name;
    	return $this;
   }
+  
+  /**
+   * Returns if the user is indexable for elastic
+   * 
+   * @return boolean
+   */
+  public function isIndexable()
+  {
+  	if ($this->getEmailCanonical() == 'admin@test.com') {
+  		return false;
+  	} else {
+  		return true;
+  	}
+  }
 }
