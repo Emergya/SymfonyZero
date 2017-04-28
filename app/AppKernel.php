@@ -27,7 +27,7 @@ class AppKernel extends Kernel
             new Knp\Bundle\MenuBundle\KnpMenuBundle(),
             //new Lsw\MemcacheBundle\LswMemcacheBundle(),
             new Sonata\IntlBundle\SonataIntlBundle(),
-            new MZ\MailChimpBundle\MZMailChimpBundle(),
+            //new MZ\MailChimpBundle\MZMailChimpBundle(),
             new HWI\Bundle\OAuthBundle\HWIOAuthBundle(),
             new Symfony\Bundle\AsseticBundle\AsseticBundle(),
             new CarouselBundle\CarouselBundle(),
